@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ptw-cwl de</title>
+    <link rel="icon" type="image/png" href="img/logo.png">
+    <link rel="stylesheet" href="https://unpkg.com/element-plus@2.7.3/dist/index.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div id="app">
+        <div class="common-layout">
+            <el-container>
+                <el-header>
+                    <el-menu mode="horizontal"></el-menu>
+                </el-header>
+                <el-container>
+                    <el-aside width="200px">
+                        <el-menu default-active="2" class="el-menu-vertical-demo" @open="handleOpen"
+                            @close="handleClose">
+                            <div v-for="navItem in navItems" :key="navItem.code">
+                                <el-sub-menu :index="navItem.code" :disabled="navItem.disabled" @click="setNavName(navItem)">
+                                    <template #title>
+                                        <span>{{ navItem.nav }}</span>
+                                    </template>
+                                    <div v-for="sidebarItem in navItem.sidebar" :key="sidebarItem.code">
+                                        <el-menu-item-group>
+                                            <el-menu-item :index="sidebarItem.code" :disabled="sidebarItem.disabled" @click="setCardItem(sidebarItem)">
+                                                {{ sidebarItem.name }}
+                                            </el-menu-item>
+                                        </el-menu-item-group>
+                                    </div>
+                                </el-sub-menu>
+                            </div>
+                        </el-menu>
+                    </el-aside>
+                    <el-main>
+                        <div v-if="navName && sidebarName">
+                            <el-breadcrumb separator="/">
+                                <el-breadcrumb-item>{{ navName }}</el-breadcrumb-item>
+                                <el-breadcrumb-item>{{ sidebarName }}</el-breadcrumb-item>
+                            </el-breadcrumb>
+                            <el-divider />
+                        </div>
+                        <el-space wrap :size="30">
+                            <div v-for="cardItem in cardItems" :key="cardItem.id">
+                                <el-card style="width: 480px" shadow="hover" class="box-card">
+                                    <template #header>
+                                        <div class="card-header">
+                                            <h1>{{ cardItem.name }}</h1>
+                                            <el-space wrap :size="10" v-if="cardItem.tag">
+                                                标签:
+                                                <el-tag v-for="tag in cardItem.tag" :key="tag.id" effect="dark">
+                                                    {{ tag.name }}
+                                                </el-tag>
+                                            </el-space>
+                                        </div>
+                                    </template>
+                                    <p>{{ cardItem.describe }}</p>
+                                    <template #footer>
+                                        <el-space wrap :size="10" v-if="cardItem.tag">
+                                            <el-select v-model="cardItem.urlValue" value-key="id" :disabled="cardItem.urlDisabled"
+                                                placeholder="选择" style="width: 240px">
+                                                <el-option v-for="url in cardItem.url" :key="url.id" :label="url.name"
+                                                    :value="url.value" :disabled="url.disabled" />
+                                            </el-select>
+                                            <el-button type="primary" :disabled="cardItem.urlDisabled"
+                                                @click="jumpUrl(cardItem.urlValue,true)">前往</el-button>
+                                        </el-space>
+
+                                    </template>
+                                </el-card>
+
+                            </div>
+                        </el-space>
+                        <el-empty description="无数据" v-if="!(navName && sidebarName)" />
+                        <el-backtop :right="100" :bottom="100" />
+                    </el-main>
+                </el-container>
+                <el-footer></el-footer>
+            </el-container>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/vue@3.4.27/dist/vue.global.prod.js"></script>
+    <script src="https://unpkg.com/element-plus@2.7.3/dist/index.full.js"></script>
+    <script src="https://unpkg.com/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>

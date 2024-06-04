@@ -1,0 +1,17 @@
+- code: main
+  nav: 主页
+  sidebar:
+  - code: test
+    name: 测试
+  - code: test2
+    name: 测试2
+    disabled: true
+    
+- code: platform
+  nav: 平台
+  disabled: true
+  sidebar:
+  - code: test3
+    name: 测试3
+  - code: test4
+    name: 测试4

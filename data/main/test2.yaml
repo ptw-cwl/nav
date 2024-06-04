@@ -1,0 +1,28 @@
+- id: 1
+  icon: "123.png"
+  name: "百度3"
+  describe: "百度"
+  urlDisabled: true
+  tag:
+    - id: "5"
+      name: "标签5"
+    - id: "6"
+      name: "标签6"
+  url:
+    - id: "3"
+      name: "默认"
+      value: "www.baidu.com"
+- id: 2
+  icon: "123.png"
+  name: "百度4"
+  describe: "百度"
+  urlDisabled: true
+  tag:
+    - id: "7"
+      name: "标签7"
+    - id: "8"
+      name: "标签8"
+  url:
+    - id: "4"
+      name: "默认"
+      value: "www.baidu.com"

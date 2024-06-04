@@ -1,0 +1,35 @@
+- id: 1
+  icon: "123.png"
+  name: "百度"
+  describe: "百度"
+  tag:
+    - id: "1"
+      name: "标签1"
+    - id: "2"
+      name: "标签2"
+  url:
+    - id: "1"
+      name: "默认"
+      value: "www.baidu.com"
+    - id: "2"
+      name: "csdn"
+      value: "https://blog.csdn.net/qq_62701769"
+    - id: "3"
+      name: "测试"
+      value: "www.baidu.com1"
+      disabled: true
+
+- id: 2
+  icon: "123.png"
+  name: "百度2"
+  describe: "百度"
+  urlDisabled: true
+  tag:
+    - id: "3"
+      name: "标签3"
+    - id: "4"
+      name: "标签4"
+  url:
+    - id: "2"
+      name: "默认"
+      value: "www.baidu.com"
