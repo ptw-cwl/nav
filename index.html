@@ -22,7 +22,10 @@
                         <el-menu default-active="2" class="el-menu-vertical-demo" @open="handleOpen"
                             @close="handleClose">
                             <div v-for="navItem in navItems" :key="navItem.code">
-                                <el-sub-menu :index="navItem.code" :disabled="navItem.disabled" @click="setNavName(navItem)">
+                                <el-menu-item v-if="navItem.card" :index="navItem.code" :disabled="navItem.disabled" @click="setCardItem(navItem)">
+                                    {{ navItem.nav }}
+                                </el-menu-item>
+                                <el-sub-menu v-if="navItem.sidebar" :index="navItem.code" :disabled="navItem.disabled" @click="setNavName(navItem)">
                                     <template #title>
                                         <span>{{ navItem.nav }}</span>
                                     </template>
@@ -38,46 +41,48 @@
                         </el-menu>
                     </el-aside>
                     <el-main>
-                        <div v-if="navName && sidebarName">
-                            <el-breadcrumb separator="/">
-                                <el-breadcrumb-item>{{ navName }}</el-breadcrumb-item>
-                                <el-breadcrumb-item>{{ sidebarName }}</el-breadcrumb-item>
-                            </el-breadcrumb>
-                            <el-divider />
-                        </div>
-                        <el-space wrap :size="30">
-                            <div v-for="cardItem in cardItems" :key="cardItem.id">
-                                <el-card style="width: 480px" shadow="hover" class="box-card">
-                                    <template #header>
-                                        <div class="card-header">
-                                            <h1>{{ cardItem.name }}</h1>
-                                            <el-space wrap :size="10" v-if="cardItem.tag">
-                                                标签:
-                                                <el-tag v-for="tag in cardItem.tag" :key="tag.id" effect="dark">
-                                                    {{ tag.name }}
-                                                </el-tag>
-                                            </el-space>
-                                        </div>
-                                    </template>
-                                    <p>{{ cardItem.describe }}</p>
-                                    <template #footer>
-                                        <el-space wrap :size="10" v-if="cardItem.tag">
-                                            <el-select v-model="cardItem.urlValue" value-key="id" :disabled="cardItem.urlDisabled"
-                                                placeholder="选择" style="width: 240px">
-                                                <el-option v-for="url in cardItem.url" :key="url.id" :label="url.name"
-                                                    :value="url.value" :disabled="url.disabled" />
-                                            </el-select>
-                                            <el-button type="primary" :disabled="cardItem.urlDisabled"
-                                                @click="jumpUrl(cardItem.urlValue,true)">前往</el-button>
-                                        </el-space>
-
-                                    </template>
-                                </el-card>
-
+                        <el-scrollbar height="100%">
+                            <div v-if="navName && sidebarName">
+                                <el-breadcrumb separator="/">
+                                    <el-breadcrumb-item>{{ navName }}</el-breadcrumb-item>
+                                    <el-breadcrumb-item>{{ sidebarName }}</el-breadcrumb-item>
+                                </el-breadcrumb>
+                                <el-divider />
                             </div>
-                        </el-space>
-                        <el-empty description="无数据" v-if="!(navName && sidebarName)" />
-                        <el-backtop :right="100" :bottom="100" />
+                            <el-space wrap :size="30">
+                                <div v-for="cardItem in cardItems" :key="cardItem.id">
+                                    <el-card style="width: 480px" shadow="hover" class="box-card">
+                                        <template #header>
+                                            <div class="card-header">
+                                                <h1>{{ cardItem.name }}</h1>
+                                                <el-space wrap :size="10" v-if="cardItem.tag">
+                                                    标签:
+                                                    <el-tag v-for="tag in cardItem.tag" :key="tag.id" effect="dark">
+                                                        {{ tag.name }}
+                                                    </el-tag>
+                                                </el-space>
+                                            </div>
+                                        </template>
+                                        <p>{{ cardItem.describe }}</p>
+                                        <template #footer>
+                                            <el-space wrap :size="10" v-if="cardItem.tag">
+                                                <el-select v-model="cardItem.urlValue" value-key="id" :disabled="cardItem.urlDisabled"
+                                                    placeholder="选择" style="width: 240px">
+                                                    <el-option v-for="url in cardItem.url" :key="url.id" :label="url.name"
+                                                        :value="url.value" :disabled="url.disabled" />
+                                                </el-select>
+                                                <el-button type="primary" :disabled="cardItem.urlDisabled"
+                                                    @click="jumpUrl(cardItem.urlValue,true)">前往</el-button>
+                                            </el-space>
+    
+                                        </template>
+                                    </el-card>
+    
+                                </div>
+                            </el-space>
+                            <el-empty description="无数据" v-if="!(navName && sidebarName)" />
+                            <el-backtop :right="100" :bottom="100" />
+                        </el-scrollbar>
                     </el-main>
                 </el-container>
                 <el-footer></el-footer>

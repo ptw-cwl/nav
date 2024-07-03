@@ -19,17 +19,22 @@ const app = {
             try {
                 const navResponse = await fetch('data/nav.yaml');
                 const navText = await navResponse.text();
-                console.log(""+navText);
                 const navData = await jsyaml.load(navText);
-                console.log(""+navData);
 
                 for (let navItem of navData) {
-                    navItem.sidebar.map(async sidebarItem => {
-                        const cardResponse = await fetch(`data/${navItem.code}/${sidebarItem.code}.yaml`);
+                    if (navItem.sidebar) {
+                        navItem.sidebar.map(async sidebarItem => {
+                            const cardResponse = await fetch(`data/${navItem.code}/${sidebarItem.code}.yaml`);
+                            const cardText = await cardResponse.text();
+                            const cardData = await jsyaml.load(cardText);
+                            sidebarItem.card = cardData;
+                        });
+                    } else {
+                        const cardResponse = await fetch(`data/${navItem.code}.yaml`);
                         const cardText = await cardResponse.text();
                         const cardData = await jsyaml.load(cardText);
-                        sidebarItem.card = cardData;
-                    });
+                        navItem.card = cardData;
+                    }
                 }
 
                 this.navItems = navData;
@@ -37,9 +42,8 @@ const app = {
                 console.error('读取YAML数据错误:', error);
             }
         },
-        setCardItem(sidebarItem) {
-            this.sidebarName = sidebarItem.name;
-            this.cardItems = sidebarItem.card;
+        setCardItem(item) {
+            this.cardItems = item.card;
         },
         setNavName(navItem) {
             this.navName = navItem.nav;

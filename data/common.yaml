@@ -1,0 +1,14 @@
+- id: 1
+  icon: 123.png
+  name: 百度3
+  describe: 百度
+  urlDisabled: true
+  tag:
+    - id: 5
+      name: 标签5
+    - id: 6
+      name: 标签6
+  url:
+    - id: 3
+      name: 默认
+      value: www.baidu.com

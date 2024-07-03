@@ -1,3 +1,6 @@
+- code: common
+  nav: 常用
+
 - code: main
   nav: 主页
   sidebar:
